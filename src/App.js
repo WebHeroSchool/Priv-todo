@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import {count, length} from './number';
+import { count, length } from './number';
 
 
 function App() {
@@ -10,7 +10,7 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
         <div className='Wrap'>
           <p>
-            Результат: {count * length}!
+            count * length = { count * length }
           </p>
         </div>
       </header>
