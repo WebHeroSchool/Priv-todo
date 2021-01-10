@@ -1,21 +1,8 @@
-import logo from './logo.svg';
-import './App.css';
-import { count, length } from './number';
+import React from 'react';
 
+const element = (
+  <div>
+    <a href=' '>Hello World!</a>
+  </div>);
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <div className='Wrap'>
-          <p>
-            count * length = { count * length }
-          </p>
-        </div>
-      </header>
-    </div>
-  );
-}
-
-export default App;
+  export { element };
