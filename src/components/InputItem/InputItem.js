@@ -1,5 +1,6 @@
 import React from 'react';
+import './InputItem.css'
 
-const InputItem = () => (<h3>InputItem</h3>);
+const InputItem = () => (<input type='text' className='input'></input>);
 
 export default InputItem;
