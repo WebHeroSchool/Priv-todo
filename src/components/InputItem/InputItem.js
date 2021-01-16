@@ -1,6 +1,6 @@
 import React from 'react';
-import './InputItem.css'
+import styles from './InputItem.module.css'
 
-const InputItem = () => (<input type='text' className='input'></input>);
+const InputItem = () => (<input type='text' className={styles.input}></input>);
 
 export default InputItem;
