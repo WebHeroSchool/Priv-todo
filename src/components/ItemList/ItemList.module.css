@@ -1,4 +1,6 @@
-.list {
+.wrap__tasks {
+  font-size: 14px;
   list-style: none;
-  padding: 5px 20px;
+  padding: 15px 0;
+  margin: 0;
 }
