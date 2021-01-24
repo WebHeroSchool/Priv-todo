@@ -10,17 +10,32 @@ class App extends React.Component {
     Items: [
       {
         value: 'Написать новое приложение',
-        isDone: true
+        isDone: true,
+        id: 1
       },
       {
         value: 'Протестировать',
-        isDone: false
+        isDone: false,
+        id: 2
       },
       {
         value: 'Запушить',
-        isDone: false
+        isDone: false,
+        id: 3
       }
     ]
+  };
+
+  onClickDone = id => {
+    const newItemList = this.state.Items.map(item => {
+      const newItem = { ...item };
+
+      if (item.id === id) {
+        newItem.isDone = !item.isDone;
+      }
+      return newItem;
+    });
+    this.setState({ Items: newItemList});
   };
 
   render() {
@@ -30,7 +45,7 @@ class App extends React.Component {
         <h1 className={styles.title}>Важные дела:</h1>
         <div className={styles.wrapList}>
           <InputItem />
-          <ItemList Items={this.state.Items} />
+          <ItemList Items={this.state.Items} onClickDone={this.onClickDone} />
         </div>
         <Footer count={2} />
       </div>);
