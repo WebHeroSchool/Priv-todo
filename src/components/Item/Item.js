@@ -11,6 +11,7 @@ const Item = ({ value, isDone, id, onClickDone, onClickDelete }) => (<div classN
     checked={isDone}
     color="primary"
     inputProps={{ 'aria-label': 'decorative checkbox' }}
+    onClick={() => onClickDone(id)}
   />
 
   <label 
