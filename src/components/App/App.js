@@ -10,7 +10,7 @@ class App extends React.Component {
     Items: [
       {
         value: 'Написать новое приложение',
-        isDone: true,
+        isDone: false,
         id: 1
       },
       {
@@ -23,7 +23,8 @@ class App extends React.Component {
         isDone: false,
         id: 3
       }
-    ]
+    ],
+    count: 3
   };
 
   onClickDone = id => {
@@ -38,6 +39,16 @@ class App extends React.Component {
     this.setState({ Items: newItemList});
   };
 
+  onClickDelete = id => {
+    const newItemList = this.state.Items.filter(item => {
+      const newItem = { ...item };
+      if (item.id !== id) {
+        return newItem;
+      }
+    });
+    this.setState({ Items: newItemList});
+  };
+
   render() {
     
     return (
@@ -45,9 +56,15 @@ class App extends React.Component {
         <h1 className={styles.title}>Важные дела:</h1>
         <div className={styles.wrapList}>
           <InputItem />
-          <ItemList Items={this.state.Items} onClickDone={this.onClickDone} />
+          <ItemList 
+            Items={this.state.Items} 
+            onClickDone={this.onClickDone}
+            onClickDelete={this.onClickDelete}
+          />
         </div>
-        <Footer count={2} />
+        <Footer 
+          count={this.state.count} 
+        />
       </div>);
  }
 };
