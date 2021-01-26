@@ -17,10 +17,6 @@ class InputItem extends React.Component {
     }
   };
 
-  onChangeToUpperCase = event => {
-    this.setState({ inputValue: event.target.value.toUpperсase() })
-  }
-
   render() { 
       return <div>
         <TextField
@@ -31,7 +27,6 @@ class InputItem extends React.Component {
           fullWidth
           value={this.state.inputValue}
           onChange={event => this.setState({ inputValue: event.target.value })}
-          toUpperCase={this.onChangeToUpperCase}
         />
 
         <Button
