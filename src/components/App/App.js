@@ -44,13 +44,25 @@ class App extends React.Component {
     this.setState({ Items: newItemList});
   };
 
+  onClickAdd = value => this.setState(state => ({
+    Items: [
+      ...state.Items,
+      {
+        value,
+        isDone: false,
+        id: state.count + 1
+      }
+    ],
+    count: state.count + 1
+  }));
+
   render() {
     
     return (
       <div className={styles.wrap}>
         <h1 className={styles.title}>Важные дела:</h1>
         <div className={styles.wrapList}>
-          <InputItem />
+          <InputItem onClickAdd={this.onClickAdd} />
           <ItemList 
             Items={this.state.Items} 
             onClickDone={this.onClickDone}
