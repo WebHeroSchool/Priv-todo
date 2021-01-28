@@ -14,4 +14,14 @@ const ItemList = ({ Items, onClickDone, onClickDelete }) => (<ul className={styl
     </li>))}
 </ul>);
 
+ItemList.defaultProps = {
+  Items: [
+    {
+      value: '',
+      isDone: false,
+      id: 0
+    }
+  ]
+};
+
 export default ItemList;
