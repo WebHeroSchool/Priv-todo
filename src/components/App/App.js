@@ -24,6 +24,7 @@ class App extends React.Component {
         id: 3
       }
     ],
+    count: 3
   };
 
   onClickDone = id => {

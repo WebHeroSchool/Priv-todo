@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
-import DeleteIcon from '@material-ui/icons/Delete'
+import DeleteIcon from '@material-ui/icons/Delete';
 import classnames from 'classnames';
-import styles from './Item.module.css'
+import styles from './Item.module.css';
 
 const Item = ({ value, isDone, id, onClickDone, onClickDelete }) => (<div className={styles.item}> 
 
@@ -38,9 +39,9 @@ const Item = ({ value, isDone, id, onClickDone, onClickDelete }) => (<div classN
 
 </div>);
 
-Item.defaultProps = {
-  isDone: false,
-  value: ''
+Item.propTypes = {
+  isDone: PropTypes.bool.isRequired,
+  value: PropTypes.string.isRequired
 }
 
 export default Item;
