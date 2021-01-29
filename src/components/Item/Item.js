@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -39,9 +39,14 @@ const Item = ({ value, isDone, id, onClickDone, onClickDelete }) => (<div classN
 
 </div>);
 
-Item.propTypes = {
-  isDone: PropTypes.bool.isRequired,
-  value: PropTypes.string.isRequired
+Item.defaultProps = {
+  value: '',
+  isDone: false
 }
+
+// Item.propTypes = {
+//   isDone: PropTypes.bool.isRequired,
+//   value: PropTypes.string.isRequired
+// }
 
 export default Item;
