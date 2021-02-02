@@ -1,4 +1,5 @@
 import React from 'react';
+// import PropTypes from 'prop-types';
 import Item from '../Item/Item';
 import styles from './ItemList.module.css'
 
@@ -13,5 +14,13 @@ const ItemList = ({ Items, onClickDone, onClickDelete }) => (<ul className={styl
     />
     </li>))}
 </ul>);
+
+// ItemList.propTypes = {
+//   value: PropTypes.string.isRequired,
+//   isDone: PropTypes.bool.isRequired,
+//   id: PropTypes.number.isRequired,
+//   onClickDone: PropTypes.func.isRequired,
+//   onClickDelete: PropTypes.func.isRequired
+// }
 
 export default ItemList;

@@ -69,9 +69,7 @@ class App extends React.Component {
             onClickDelete={this.onClickDelete}
           />
         </div>
-        <Footer 
-          count={this.state.count} 
-        />
+        <Footer count={this.state.count} />
       </div>);
  }
 };
