@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -8,15 +7,8 @@ import styles from './Item.module.css';
 
 class Item extends React.Component {
 
-  componentDidMount() {
-    this.timerID = setInterval(() => console.log('interval'), 1000)
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.timerID)
-  }
-
   render() {
+    
     const { value, isDone, id, onClickDone, onClickDelete } = this.props;
     
     return (
@@ -54,11 +46,6 @@ class Item extends React.Component {
 
     </div >);
   }
-}
-
-Item.propTypes = {
-  isDone: PropTypes.bool.isRequired,
-  value: PropTypes.string.isRequired
 }
 
 export default Item;
