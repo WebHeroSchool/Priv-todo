@@ -32,10 +32,10 @@ const ToDo = () => {
   };
 
   const [Items, setItems] = useState(initialState.Items);
-  const [count, setCount] = useState(initialState.count);
-  const [filtered, setFiltered] = useState(initialState.filtered);
-  const [filteredItems, setFilteredItems] = useState(initialState.filteredItems);
-  const [filteredCount, setFilteredCount] = useState(initialState.filteredCount);
+  // const [filtered, setFiltered] = useState(initialState.filtered);
+  const [filteredItems, setFilteredItems] = useState(initialState.Items);
+  // const [filteredCount, setFilteredCount] = useState(initialState.filteredCount);
+  const [count, setCount] = useState(0)
 
   useEffect(() => {
     console.log('update')
@@ -56,17 +56,18 @@ const ToDo = () => {
     });
 
     setItems(newItemList);
+    setFilteredItems(newItemList);
   };
 
   const onClickDelete = id => {
     const newItemList = [...Items];
-    let newCount = count;
 
     let index = newItemList.map(item => item.id).indexOf(id);
     if (index !== -1) {
       newItemList.splice(index, 1)
       setItems(newItemList);
-      setCount(newCount - 1);
+      setFilteredItems(newItemList);
+      setCount(count - 1);
     }
   };
 
@@ -82,20 +83,18 @@ const ToDo = () => {
     ];
 
     setItems(newItemList);
+    setFilteredItems(newItemList);
     setCount(count + 1);
   };
 
   const onClickShowAll = () => {
     let newItemList = [...Items];
-    let newCount = count;
 
-    setItems(newItemList);
-    setCount(newCount);
+    setFilteredItems(newItemList);
   };
 
   const onClickShowActive = () => {
     let newItemList = [...Items];
-    let newCount = count;
 
     let id;
     const arrayOfId = newItemList.filter(item => item.isDone === true).map(item => item.id);
@@ -104,19 +103,15 @@ const ToDo = () => {
       let index = newItemList.map(item => item.id).indexOf(id);
       if (index !== -1) {
         newItemList.splice(index, 1);
-        newCount --;
+        setCount(count - 1);
       }
     }
 
     setFilteredItems(newItemList);
-    setFilteredCount(newCount);
   };
 
   const onClickShowComleted = () => {
     let newItemList = [...Items];
-    let newCount = count;
-    let newFiltered = filtered;
-    newFiltered = true;
 
     let id;
     const arrayOfId = newItemList.filter(item => item.isDone !== true).map(item => item.id);
@@ -125,18 +120,15 @@ const ToDo = () => {
       let index  = newItemList.map(item => item.id).indexOf(id);
       if (index !== -1) {
         newItemList.splice(index, 1);
-        newCount --;
+        setCount(count - 1);
       }
     }
 
-    setFiltered(newFiltered);
     setFilteredItems(newItemList);
-    setFilteredCount(newCount);
   };
 
   const onClickClearCompleted = () => {
     let newItemList = [...Items];
-    let newCount = count;
 
     let id;
     const arrayOfId = newItemList.filter(item => item.isDone === true).map(item => item.id);
@@ -145,11 +137,10 @@ const ToDo = () => {
       let index = newItemList.map(item => item.id).indexOf(id);
       if (index !== -1) {
         newItemList.splice(index, 1);
-        newCount --;
+        setCount(count - 1);
       }
     }
-    setItems(newItemList);
-    setCount(newCount);
+    setFilteredItems(newItemList);
   }
 
   return (
@@ -158,12 +149,12 @@ const ToDo = () => {
       <div className={styles.wrapList}>
         <InputItem onClickAdd={onClickAdd} />
         <ItemList
-          Items={Items}
+          Items={filteredItems}
           onClickDone={onClickDone}
           onClickDelete={onClickDelete}
         />
       </div>
-      <Footer count={filteredCount} 
+      <Footer count={filteredItems.length} 
         onClickShowAll={onClickShowAll}
         onClickShowActive={onClickShowActive}
         onClickShowComleted={onClickShowComleted}
