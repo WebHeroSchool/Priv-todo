@@ -3,8 +3,9 @@
 .wrap {
   display: grid;
   grid-template-areas: 'sidebar ... content content';
-  margin: auto;
-  width: 75%;
+  max-width: 1000px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .sidebar {

@@ -32,9 +32,7 @@ const ToDo = () => {
   };
 
   const [Items, setItems] = useState(initialState.Items);
-  // const [filtered, setFiltered] = useState(initialState.filtered);
   const [filteredItems, setFilteredItems] = useState(initialState.Items);
-  // const [filteredCount, setFilteredCount] = useState(initialState.filteredCount);
   const [count, setCount] = useState(0)
 
   useEffect(() => {
