@@ -8,9 +8,8 @@ import styles from './Footer.module.css';
 
 const Footer = ({ count, onClickShowAll, onClickShowActive, onClickShowComleted, onClickClearCompleted }) => (
   <footer className={styles.wrapFooter}>
-    <p>осталось: {count}</p>
 
-    <div>
+    <div className={styles.wrapFilter}>
       <Button color="primary" onClick={onClickShowAll}>все </Button>
       <Button color="primary" onClick={onClickShowActive}>активные </Button>
       <Button color="primary" onClick={onClickShowComleted}>выполнено </Button>

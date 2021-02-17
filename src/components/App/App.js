@@ -23,7 +23,7 @@ const App = () => (
       </Card>
 
       <Card>
-        <Route path='/' component={About}/>
+        <Route path='/' exact component={About}/>
         <Route path='/todo' component={ToDo}/>
         <Route path='/contacts' component={Contacts}/>
       </Card>
