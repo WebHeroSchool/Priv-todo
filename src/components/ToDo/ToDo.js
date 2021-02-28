@@ -2,9 +2,12 @@ import React, { useEffect, useState } from 'react';
 
 import InputItem from "../InputItem/InputItem";
 import ItemList from "../ItemList/ItemList";
-import Footer from "../Footer/Footer";
 
+import Button from '@material-ui/core/Button';
 import styles from './ToDo.module.css';
+import classnames from 'classnames';
+
+import errorImg from './img/error.svg';
 
 const ToDo = () => {
   const initialState = {
@@ -25,25 +28,39 @@ const ToDo = () => {
         id: 3
       }
     ],
-    count: 3,
-    filtered: false,
+    filter: 'all',
     filteredItems: [],
-    filteredCount: 0
+    count: 3,
+    countActive: 3,
+    countDone: 0,
+    lastID: 3,
+    selectedId: -1
   };
 
   const [Items, setItems] = useState(initialState.Items);
-  const [filteredItems, setFilteredItems] = useState(initialState.Items);
-  const [count, setCount] = useState(0)
+  const [filteredItems, setFilteredItems] = useState(initialState.filteredItems);
+  const [filter, setFilter] = useState(initialState.filter);
+  const [count, setCount] = useState(initialState.count);
+  const [lastID, setLastId] = useState(initialState.lastID);
+  const [countActive, setCountActive] = useState(initialState.countActive);
+  const [countDone, setCountDone] = useState(initialState.countDone);
+  const [selectedId, setSelectedId] = useState(initialState.selectedId);
 
   useEffect(() => {
-    console.log('update')
-  });
-
-  useEffect(() => {
-    console.log('mount')
+    setFilteredItems(Items);
+    // eslint-disable-next-line
   }, []);
 
-  const onClickDone = (id) => {
+  useEffect(() => {
+    onClickFilter(filter);
+    // eslint-disable-next-line
+  }, [Items]);
+
+  useEffect(() => {
+    onClickSelected(-1);
+  }, [filter]);
+
+  const onClickDone = id => {
     const newItemList = Items.map(item => {
       const newItem = { ...item };
 
@@ -53,22 +70,26 @@ const ToDo = () => {
       return newItem;
     });
 
+    const newCountDone = newItemList.filter(item => item.isDone);
+    const newCountActive = newItemList.filter(item => !item.isDone);
+
     setItems(newItemList);
-    setFilteredItems(newItemList);
+    setCountDone(newCountDone.length);
+    setCountActive(newCountActive.length)
   };
 
   const onClickDelete = id => {
-    const newItemList = [...Items];
+    const newItemList = Items.filter(item => item.id !== id);
+    const newCountDone = newItemList.filter(item => item.isDone);
+    const newCountActive = newItemList.filter(item => !item.isDone);
 
-    let index = newItemList.map(item => item.id).indexOf(id);
-    if (index !== -1) {
-      newItemList.splice(index, 1)
-      setItems(newItemList);
-      setFilteredItems(newItemList);
-      setCount(count - 1);
-    }
+    setItems(newItemList);
+    setCount((count) => count - 1);
+    setCountDone(newCountDone.length);
+    setCountActive(newCountActive.length);
   };
 
+  const onClickSelected = id => setSelectedId(id);
 
   const onClickAdd = (value) => {
     const newItemList = [
@@ -76,87 +97,86 @@ const ToDo = () => {
       {
         value,
         isDone: false,
-        id: count + 1
+        id: lastID + 1
       }
     ];
 
     setItems(newItemList);
-    setFilteredItems(newItemList);
-    setCount(count + 1);
+    setCount((count) => count + 1);
+    setLastId((lastID) => lastID +1);
+    setCountActive((countActive) => countActive + 1);
   };
 
-  const onClickShowAll = () => {
-    let newItemList = [...Items];
-
-    setFilteredItems(newItemList);
-  };
-
-  const onClickShowActive = () => {
-    let newItemList = [...Items];
-
-    let id;
-    const arrayOfId = newItemList.filter(item => item.isDone === true).map(item => item.id);
-
-    for (id of arrayOfId) {
-      let index = newItemList.map(item => item.id).indexOf(id);
-      if (index !== -1) {
-        newItemList.splice(index, 1);
-        setCount(count - 1);
-      }
+  const onClickFilter = filter => {
+    let  newItemList = [];
+    switch (filter) {
+      case 'all':
+        newItemList = Items;
+        break;
+      case 'active':
+        newItemList = Items.filter (item => !item.isDone);
+        break;
+      case 'finished':
+        newItemList = Items.filter (item => item.isDone);
+        break;
+      default:
+        newItemList = Items;
     }
 
     setFilteredItems(newItemList);
+    setFilter(filter);
   };
-
-  const onClickShowComleted = () => {
-    let newItemList = [...Items];
-
-    let id;
-    const arrayOfId = newItemList.filter(item => item.isDone !== true).map(item => item.id);
-    
-    for (id of arrayOfId) {
-      let index  = newItemList.map(item => item.id).indexOf(id);
-      if (index !== -1) {
-        newItemList.splice(index, 1);
-        setCount(count - 1);
-      }
-    }
-
-    setFilteredItems(newItemList);
-  };
-
-  const onClickClearCompleted = () => {
-    let newItemList = [...Items];
-
-    let id;
-    const arrayOfId = newItemList.filter(item => item.isDone === true).map(item => item.id);
-
-    for (id of arrayOfId) {
-      let index = newItemList.map(item => item.id).indexOf(id);
-      if (index !== -1) {
-        newItemList.splice(index, 1);
-        setCount(count - 1);
-      }
-    }
-    setFilteredItems(newItemList);
-  }
 
   return (
     <div className={styles.wrap}>
       <h1 className={styles.title}>Важные дела:</h1>
       <div className={styles.wrapList}>
-        <InputItem onClickAdd={onClickAdd} />
+
+        <InputItem onClickAdd={onClickAdd} Items={Items} className={styles.inputItem}/>
+
+        {Items.length > 0 ?
         <ItemList
           Items={filteredItems}
           onClickDone={onClickDone}
           onClickDelete={onClickDelete}
-        />
+          onClickSelected={onClickSelected}
+          selectedId={selectedId}
+          className={styles.itemList}
+        /> :
+
+        <div className={styles.TodoErrorWrap}>
+          <img src={errorImg} alt='ошибка загрузки' className={styles.TodoErrorImg}></img>
+            <h2 className={styles.TodoErrorTitle}>Вы ещё не добавили ни одной задачи</h2>
+            <p className={styles.TodoErrorText}>Сделайте это прямо сейчас!</p>
+        </div>}
+
       </div>
-      <Footer count={filteredItems.length} 
-        onClickShowAll={onClickShowAll}
-        onClickShowActive={onClickShowActive}
-        onClickShowComleted={onClickShowComleted}
-        onClickClearCompleted={onClickClearCompleted}/>
+
+      <div className={styles.wrapFooter}>
+        <div className={styles.wrapFilter}>
+          <Button color="primary" className={classnames({ [styles.todoCount]: true, [styles.todoCountActive]: filter === 'all' })} onClick={() => onClickFilter('all')} >
+            все
+            <span className={classnames({ [styles.todoCountNumber]: true, [styles.todoCountNumberActive]: filter === 'all' })}>&nbsp; {count}</span>
+          </Button>
+          <Button color="primary" className={classnames({ [styles.todoCount]: true, [styles.todoCountActive]: filter === 'active' })} onClick={() => onClickFilter('active')}>
+            активные
+            <span className={classnames({ [styles.todoCountNumber]: true, [styles.todoCountNumberActive]: filter === 'active' })}>&nbsp; {countActive}</span>
+          </Button>
+          <Button color="primary" className={classnames({ [styles.todoCount]: true, [styles.todoCountActive]: filter === 'finished' })} onClick={() => onClickFilter('finished')}>
+            выполнено
+            <span className={classnames({ [styles.todoCountNumber]: true, [styles.todoCountNumberActive]: filter === 'finished' })}>&nbsp; {countDone}</span>
+          </Button>
+        </div>
+        {/* <div>
+          <IconButton
+            aria-label="delete"
+            color='primary'
+            onClick={onClickClearCompleted}>
+            <DeleteIcon />
+          </IconButton>
+        </div> */}
+      </div>
+
     </div>);
 };
 

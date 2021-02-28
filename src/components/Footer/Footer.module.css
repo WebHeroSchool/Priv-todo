@@ -1,9 +1,0 @@
-.wrapFooter {
-  display: flex;
-  justify-content: space-between;
-  width: 550px;
-  margin: auto;
-  text-transform: lowercase;
-  align-items: center;
-  color: rgba(0, 0, 0, .6);
-}

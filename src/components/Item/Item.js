@@ -5,16 +5,17 @@ import Grid from '@material-ui/core/Grid';
 import DeleteIcon from '@material-ui/icons/Delete';
 import classnames from 'classnames';
 import styles from './Item.module.css';
+import PropTypes from 'prop-types';
 
 class Item extends React.Component {
 
   render() {
     
-    const { value, isDone, id, onClickDone, onClickDelete } = this.props;
+    const { value, isDone, id, onClickDone, onClickDelete, onClickSelected, selectedId } = this.props;
     
     return (
     
-    <div className={styles.item}> 
+    <div className={styles.item} onClick={() => onClickSelected(id)} selected={selectedId}> 
 
       <Checkbox
       checked={isDone}
@@ -48,5 +49,17 @@ class Item extends React.Component {
     </div >);
   }
 }
+
+Item.propTypes = {
+  value: PropTypes.string.isRequired,
+  isDone: PropTypes.bool.isRequired,
+  id: PropTypes.number.isRequired,
+  onClickDone: PropTypes.func.isRequired,
+  onClickDelete: PropTypes.func.isRequired
+};
+
+Item.defaultProps = {
+  isDone: false
+};
 
 export default Item;
