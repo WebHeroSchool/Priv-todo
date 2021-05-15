@@ -1,18 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Item from '../Item/Item';
+
 import styles from './ItemList.module.css'
 
-const ItemList = ({ Items, onClickDone, onClickDelete }) => {
+const ItemList = ({ Items, onClickDone, onClickDelete, onClickSelected, selectedId }) => {
   return (
-    <ul className={styles.wrap__tasks}>
-      {Items.map( (item) => (<li key={item.id} className={styles.tasks}>
+    <ul className={styles.wrapTasks}>
+      {Items.map((item) => (<li key={item.id} className={styles.tasks}>
         <Item
           value={item.value}
           isDone={item.isDone}
           id={item.id}
           onClickDone={onClickDone}
           onClickDelete={onClickDelete}
+          onClickSelected={onClickSelected}
+          selectedId={selectedId}
+          key= {item.id}
         />
       </li>))}
     </ul>
@@ -20,9 +24,7 @@ const ItemList = ({ Items, onClickDone, onClickDelete }) => {
 };
 
 ItemList.propTypes = {
-  value: PropTypes.string.isRequired,
-  isDone: PropTypes.bool.isRequired,
-  id: PropTypes.number.isRequired,
+  Items: PropTypes.array.isRequired,
   onClickDone: PropTypes.func.isRequired,
   onClickDelete: PropTypes.func.isRequired
 }
